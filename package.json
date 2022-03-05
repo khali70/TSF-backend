@@ -5,7 +5,7 @@
   "license": "MIT",
   "description": "This example is so cool.",
   "scripts": {
-    "start": "node app.js"
+    "start": "node index.js"
   },
   "engines": {
     "node": "14.x"
