@@ -1,8 +1,15 @@
 {
-  "name": "AI",
+  "name": "ai-backend",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "description": "This example is so cool.",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": "14.x"
+  },
   "dependencies": {
     "@tensorflow/tfjs": "^3.13.0",
     "@tensorflow/tfjs-node": "^3.14.0",

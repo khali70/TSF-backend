@@ -11,6 +11,7 @@ const app = express();
     const p = model.predict(tf.tensor2d(data, shape))
     const value = Array.from(p.dataSync());
     const result = value.indexOf(Math.max(...value))
+    res.setHeader('Content-Type', 'application/json');
     if (result > -1) {
       res.send(JSON.stringify({ res: result }))
     } else {
