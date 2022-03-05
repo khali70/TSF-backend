@@ -1,6 +1,5 @@
 # npm files
 node_modules
-*-lock.josn
 
 # ignore files
 *.i.*
