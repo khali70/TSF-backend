@@ -5,6 +5,9 @@ const app = express();
 
   const model = await tf.loadLayersModel('file://' + './model.json')
   app.use(express.json())
+  app.get('/', async (req, res) => {
+    res.send('Hello world')
+  })
   app.post('/', async (req, res) => {
     const data = req.body.data?.split(',').map(parseFloat);
     const shape = req.body?.shape || [1, 5]
