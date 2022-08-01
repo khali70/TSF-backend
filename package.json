@@ -7,13 +7,10 @@
   "scripts": {
     "start": "node index.js"
   },
-  "engines": {
-    "node": "14.x"
-  },
   "dependencies": {
-    "@tensorflow/tfjs": "^3.13.0",
-    "@tensorflow/tfjs-node": "^3.14.0",
-    "@tensorflow/tfjs-vis": "^1.5.1",
+    "@firebase/app": "^0.7.29",
+    "@firebase/firestore": "^3.4.13",
+    "dotenv": "^16.0.1",
     "express": "^4.17.3"
   }
 }
