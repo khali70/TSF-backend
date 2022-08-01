@@ -1,6 +1,9 @@
 # npm files
 node_modules
-
+.env
 # ignore files
 *.i.*
 *.*nb
+*.log
+*.lock
+*-lock.json
