@@ -10,7 +10,7 @@ const app = express();
   app.use(express.json())
   app.use(express.static('public'))
   app.get('/', async (req, res) => {
-    res.send('Hello world')
+    res.send('Hello world 123')
   })
   app.post('/update', async (req, res) => {
     try {
@@ -34,6 +34,7 @@ const app = express();
         shape: JSON.parse(ai.shape),
         mapping: JSON.parse(ai.map)
       }))
+      res.header("Access-Control-Allow-Origin", "*");
       res.status(200);
       res.send({ body: 'updated' })
     } catch (error) {
