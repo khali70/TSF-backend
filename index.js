@@ -3,7 +3,7 @@ const { initializeApp } = require('@firebase/app');
 const { getFirestore, getDocs, collection, doc } = require('@firebase/firestore');
 const { firebaseConfig } = require('./firebase.config');
 const { getRemoteFile } = require('./download')
-
+const fs = require('fs');
 const app = express();
 (async () => {
 
@@ -27,7 +27,13 @@ const app = express();
       }
       const ai = docs[0];
       getRemoteFile(`public/` + ai.model.title, ai.model.src);
-      getRemoteFile(`public/` + ai.weights.title, ai.weights.src);
+      for (const { title, src } of ai.weights) {
+        getRemoteFile(`public/` + title, src);
+      }
+      fs.writeFileSync('public/' + 'map.json', JSON.stringify({
+        shape: JSON.parse(ai.shape),
+        mapping: JSON.parse(ai.map)
+      }))
       res.status(200);
       res.send({ body: 'updated' })
     } catch (error) {
@@ -37,6 +43,6 @@ const app = express();
     }
 
   })
-  app.listen(process.env.PORT || 3000);
-  console.log('Web Server is listening at PORT ' + (process.env.PORT || 3000));
+  app.listen(process.env.PORT || 8000);
+  console.log('Web Server is listening at PORT http://localhost:' + (process.env.PORT || 8000));
 })()
