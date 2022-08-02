@@ -8,8 +8,6 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "@firebase/app": "^0.7.29",
-    "@firebase/firestore": "^3.4.13",
     "dotenv": "^16.0.1",
     "express": "^4.17.3"
   }
