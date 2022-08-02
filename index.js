@@ -33,7 +33,9 @@ const app = express();
       fs.writeFileSync('public/' + 'map.json', JSON.stringify({
         shape: JSON.parse(ai.shape),
         mapping: JSON.parse(ai.map)
-      }))
+      }), {
+        flag: 'w'
+      })
       res.header("Access-Control-Allow-Origin", "*");
       res.status(200);
       res.send({ body: 'updated' })

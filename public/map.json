@@ -1,1 +1,15 @@
-{"shape":[1,5],"mapping":{"2":"test"}}
+{
+  "shape": [1, 10],
+  "mapping": {
+    "0": "doaa",
+    "1": "dr",
+    "2": "gestures",
+    "3": "heard",
+    "4": "lifesign",
+    "5": "thanks",
+    "6": "to",
+    "7": "translate",
+    "8": "we",
+    "9": "words"
+  }
+}
