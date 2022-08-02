@@ -1,7 +1,4 @@
 const express = require('express');
-const { initializeApp } = require('@firebase/app');
-const { getFirestore, getDocs, collection, doc } = require('@firebase/firestore');
-const { firebaseConfig } = require('./firebase.config');
 const { getRemoteFile } = require('./download')
 const fs = require('fs');
 const app = express();
@@ -14,18 +11,9 @@ const app = express();
   })
   app.post('/update', async (req, res) => {
     try {
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore(app);
-
-      const querySnapshot = await getDocs(collection(db, "/LifeSign/SW/ai"));
-      const docs/* : AI[] */ = [];
-      (querySnapshot /* as QuerySnapshot<AI> */).forEach((doc) => {
-        docs.push(doc.data());
-      });
-      if (!docs?.[0]) {
-        throw new Error(`model object not found`);
-      }
-      const ai = docs[0];
+      if (!req?.body?.ai) throw `can't read ai in request body`
+      const { ai } = req.body;
+      console.log(req.body)
       await getRemoteFile(`public/` + ai.model.title, ai.model.src);
       for (const { title, src } of ai.weights) {
         await getRemoteFile(`public/` + title, src);
@@ -42,6 +30,9 @@ const app = express();
       res.status(200);
       res.send({ body: 'updated' })
     } catch (error) {
+      console.log()
+      console.log(JSON.stringify({ body: req.body, headers: req.headers }))
+      console.log()
       console.log(error);
       res.status(500);
       res.send({ body: 'error while updating' })
