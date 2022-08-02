@@ -1,8 +1,7 @@
 const https = require('https');
 const fs = require('fs');
 
-function getRemoteFile(file, url, listener = { onEnd: () => { }, onData: () => { } }) {
-  const { onEnd, onData } = listener
+function getRemoteFile(file, url) {
   let localFile = fs.createWriteStream(file);
   return new Promise((resolve, reject) => {
     const request = https.get(url, function (response) {
@@ -12,12 +11,10 @@ function getRemoteFile(file, url, listener = { onEnd: () => { }, onData: () => {
 
       response.on("data", function (chunk) {
         cur += chunk.length;
-        onData();
       });
 
       response.on("end", function () {
         console.log("Download complete");
-        onEnd()
         resolve('string');
       });
 
