@@ -1,24 +1,29 @@
 const https = require('https');
 const fs = require('fs');
 
-function getRemoteFile(file, url) {
+function getRemoteFile(file, url, listener = { onEnd: () => { }, onData: () => { } }) {
+  const { onEnd, onData } = listener
   let localFile = fs.createWriteStream(file);
-  const request = https.get(url, function (response) {
-    var len = parseInt(response.headers["content-length"], 10);
-    var cur = 0;
-    var total = len / 1048576; //1048576 - bytes in 1 Megabyte
+  return new Promise((resolve, reject) => {
+    const request = https.get(url, function (response) {
+      var len = parseInt(response.headers["content-length"], 10);
+      var cur = 0;
+      var total = len / 1048576; //1048576 - bytes in 1 Megabyte
 
-    response.on("data", function (chunk) {
-      cur += chunk.length;
-      showProgress(file, cur, len, total);
+      response.on("data", function (chunk) {
+        cur += chunk.length;
+        onData();
+      });
+
+      response.on("end", function () {
+        console.log("Download complete");
+        onEnd()
+        resolve('string');
+      });
+
+      response.pipe(localFile);
     });
-
-    response.on("end", function () {
-      console.log("Download complete");
-    });
-
-    response.pipe(localFile);
-  });
+  })
 }
 
 function showProgress(file, cur, len, total) {

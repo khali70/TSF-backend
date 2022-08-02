@@ -10,7 +10,7 @@ const app = express();
   app.use(express.json())
   app.use(express.static('public'))
   app.get('/', async (req, res) => {
-    res.send('Hello world 123')
+    res.send('Hello world again')
   })
   app.post('/update', async (req, res) => {
     try {
@@ -26,14 +26,16 @@ const app = express();
         throw new Error(`model object not found`);
       }
       const ai = docs[0];
-      getRemoteFile(`public/` + ai.model.title, ai.model.src);
+      await getRemoteFile(`public/` + ai.model.title, ai.model.src);
       for (const { title, src } of ai.weights) {
-        getRemoteFile(`public/` + title, src);
+        await getRemoteFile(`public/` + title, src);
       }
-      fs.writeFileSync('public/' + 'map.json', JSON.stringify({
+      const mapping = JSON.stringify({
         shape: JSON.parse(ai.shape),
         mapping: JSON.parse(ai.map)
-      }), {
+      });
+      console.log(mapping);
+      fs.writeFileSync('public/' + 'map.json', mapping, {
         flag: 'w'
       })
       res.header("Access-Control-Allow-Origin", "*");
