@@ -1,44 +1,34 @@
 const express = require('express');
-const { initializeApp } = require('@firebase/app');
-const { getFirestore, getDocs, collection, doc } = require('@firebase/firestore');
-const { firebaseConfig } = require('./firebase.config');
-const { getRemoteFile } = require('./download')
-const fs = require('fs');
+const { getRemoteFile, DownloadAIModel, getAIObject } = require('./download')
 const app = express();
 (async () => {
-
+  console.log("process.env.NODE_ENV " + process.env.NODE_ENV)
+  const originUrl = process.env.NODE_ENV === 'development' ? "http://localhost:3000" : "https://eclectic-druid-c8e708.netlify.app";
   app.use(express.json())
   app.use(express.static('public'))
   app.get('/', async (req, res) => {
     res.send('Hello world again')
   })
+  app.options('/update', async (req, res) => {
+    if (req.headers?.origin === originUrl) {
+      res.header("Access-Control-Allow-Methods", 'POST,GET');
+      res.header("Access-Control-Allow-Origin", originUrl);
+      res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept, Connection, Accept-Encoding"
+      );
+      res.status(200);
+      res.send();
+    }
+  })
   app.post('/update', async (req, res) => {
+    console.log('------------------------update route------------------------------------')
+    console.log(JSON.stringify(req.body))
+    console.log()
     try {
-      const app = initializeApp(firebaseConfig);
-      const db = getFirestore(app);
-
-      const querySnapshot = await getDocs(collection(db, "/LifeSign/SW/ai"));
-      const docs/* : AI[] */ = [];
-      (querySnapshot /* as QuerySnapshot<AI> */).forEach((doc) => {
-        docs.push(doc.data());
-      });
-      if (!docs?.[0]) {
-        throw new Error(`model object not found`);
-      }
-      const ai = docs[0];
-      await getRemoteFile(`public/` + ai.model.title, ai.model.src);
-      for (const { title, src } of ai.weights) {
-        await getRemoteFile(`public/` + title, src);
-      }
-      const mapping = JSON.stringify({
-        shape: JSON.parse(ai.shape),
-        mapping: JSON.parse(ai.map)
-      });
-      console.log(mapping);
-      fs.writeFileSync('public/' + 'map.json', mapping, {
-        flag: 'w'
-      })
-      res.header("Access-Control-Allow-Origin", "*");
+      const ai = await getAIObject();
+      DownloadAIModel(ai);
+      res.header("Access-Control-Allow-Origin", originUrl);
       res.status(200);
       res.send({ body: 'updated' })
     } catch (error) {
@@ -48,6 +38,11 @@ const app = express();
     }
 
   })
-  app.listen(process.env.PORT || 8000);
-  console.log('Web Server is listening at PORT http://localhost:' + (process.env.PORT || 8000));
+  app.listen(process.env.PORT || 8000, () => {
+    getAIObject()
+      .then((ai) => {
+        DownloadAIModel(ai);
+      })
+    console.log('Web Server is listening at PORT http://localhost:' + (process.env.PORT || 8000));
+  });
 })()
