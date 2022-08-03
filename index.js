@@ -23,10 +23,8 @@ const app = express();
   })
   app.post('/update', async (req, res) => {
     console.log('------------------------update route------------------------------------')
-    console.log(JSON.stringify(req.body))
-    console.log()
     try {
-      const ai = await getAIObject();
+      const ai = req.body?.ai || await getAIObject();
       DownloadAIModel(ai);
       res.header("Access-Control-Allow-Origin", originUrl);
       res.status(200);
