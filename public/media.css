@@ -1,0 +1,90 @@
+
+  html[lang="ar"] .sidebar-open .sidebar .sidebar-toggle {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+  html[lang="ar"] .sidebar-small .header,
+  html[lang="ar"] .sidebar-open .header {
+    right: 0;
+    left: unset;
+  }
+  html[lang="ar"] .sidebar-small .sidebar {
+    right: -70px;
+    left: unset;
+  }
+  html[lang="ar"] .sidebar-small .sidebar .sidebar-toggle {
+    left: -67px;
+    right: unset;
+  }
+  html[lang="ar"] .sidebar-small .wrapper,
+  html[lang="ar"] .sidebar-open .wrapper {
+    margin-right: 0;
+    margin-left: unset;
+  }
+  html[lang="ar"] .sidebar-small .subheader,
+  html[lang="ar"] .sidebar-open .subheader {
+    right: 0;
+    left: unset;
+    margin-left: unset;
+    margin-right: 0;
+  }
+  html[lang="ar"] .sidebar-open .sidebar {
+    left: unset;
+    right: 0;
+  }
+  html[lang="ar"] .subheader-main .subheader-right-toggle {
+    left: 25px;
+    right: unset;
+  }
+  html[lang="ar"] .content-two-column .column-one {
+    right: -275px;
+    left: unset;
+    -webkit-transition: right 0.25s, opacity 0.25s, -webkit-transform 0.25s;
+    -o-transition: right 0.25s, opacity 0.25s, -o-transform 0.25s;
+    transition: right 0.25s, opacity 0.25s, transform 0.25s;
+  }
+  html[lang="ar"] .content-two-column .column-two {
+    margin-right: unset;
+    margin-left: 0;
+  }
+  html[lang="ar"] .subheader-open .content-two-column .column-one {
+    right: 0;
+    left: unset;
+  }
+  html[lang="ar"] .content-three-column .column-one {
+    left: unset;
+    left: -275px;
+    -webkit-transition: right 0.25s, opacity 0.25s, -webkit-transform 0.25s;
+    -o-transition: right 0.25s, opacity 0.25s, -o-transform 0.25s;
+    transition: right 0.25s, opacity 0.25s, transform 0.25s;
+  }
+  html[lang="ar"] .subheader-open .content-three-column .column-one {
+    left: unset;
+    right: 0;
+  }
+  html[lang="ar"] .content-three-column .comlumn-three-main {
+    margin-right: 0;
+    margin-left: unset;
+  }
+  html[lang="ar"] .content-three-column .comlumn-three-main .column-three {
+    left: unset;
+    right: 100%;
+    -webkit-transition: right 0.25s, opacity 0.25s, -webkit-transform 0.25s;
+    -o-transition: right 0.25s, opacity 0.25s, -o-transform 0.25s;
+    transition: right 0.25s, opacity 0.25s, transform 0.25s;
+  }
+  html[lang="ar"]
+    .subheader-right-open
+    .content-three-column
+    .comlumn-three-main
+    .column-three {
+    right: 0;
+    left: unset;
+  }
+  html[lang="ar"] .subheader .subheader-toolbar:after {
+    right: unset;
+    left: 25px;
+  }
